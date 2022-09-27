@@ -26,22 +26,42 @@ function goBtnHandler() {
 }
 
 // MENU FUNCTIONS
+
+let contacts = []
+
 function displayContacts() {
   console.log('Display Contacts');
 }
 
 function addContact() {
-  console.log('Add Contact');
+  let name = prompt("Enter name:");
+  let email = prompt("Enter email:");
+  let phoneNum = prompt("Enter phone number");
+  let country = prompt("Enter country");
+  contacts.push(newContact(name, email, phoneNum, country))
 }
 
-function removeContact() {
-  console.log('Remove Contact');
+// function removeContact() {
+//   console.log('Remove Contact');
+// }
+
+// function displayByName() {
+//   console.log('Display by Name');
+// }
+
+// function displayByCountry() {
+//   console.log('Display by Country');
+// }
+
+function newContact(name, email, phoneNum, country) {
+  return {
+    name: name,
+    email: email, 
+    phoneNum: phoneNum,
+    country: country,
+  }
 }
 
-function displayByName() {
-  console.log('Display by Name');
-}
-
-function displayByCountry() {
-  console.log('Display by Country');
+function save() {
+  localStorage.setItem('contacts', JSON.stringify(contacts))
 }
