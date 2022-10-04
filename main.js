@@ -38,7 +38,7 @@ function displayContacts() {
     outputEl.innerHTML += getContactStr(i);
   }
 }
-
+//hi
 function addContact() {
   let name = prompt("Enter name:");
   let email = prompt("Enter email:");
