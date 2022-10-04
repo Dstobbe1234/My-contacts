@@ -3,3 +3,13 @@ body {
   margin: auto;
   padding: 20px;
 }
+
+.contact {
+  border: 2px solid red;
+  width: 500px;
+  margin: 10px 0px;
+}
+
+.info {
+  text-align:center;
+}
