@@ -22,8 +22,8 @@ function goBtnHandler() {
     displayByName();
   } else if (selection === "display-country") {
     displayByCountry();
-  } else if (selection === "findByEmail") {
-    findByEmail();
+  } else if (selection === "searchByEmail") {
+    searchByEmail();
   }
 }
 
@@ -44,28 +44,32 @@ function addContact() {
   let email = prompt("Enter email:");
   let phoneNum = prompt("Enter phone number");
   let country = prompt("Enter country");
-  contacts.push(newContact(name, email, phoneNum, country, contacts.length));
-  outputEl.innerHTML = `Contact Added : ${name}`;
-  save();
+  if(findByEmail(email) === -1) {
+    contacts.push(newContact(name, email, phoneNum, country, contacts.length));
+    outputEl.innerHTML = `Contact Added : ${name}`;
+    save();
+  } else {
+    outputEl.innerHTML = "Email is already in contacts"
+  }
 }
 
 function removeContact() {
-  let indexSearch = prompt("Enter index number");
-  save();
-  if (indexSearch >= 0 && indexSearch < contacts.length) {
-    outputEl.innerHTML = `Contact Removed: ${contacts[indexSearch].name}`;
-    contacts.splice(indexSearch, 1);
+  let emailSearch = prompt("Enter email");
+  let index = findByEmail(emailSearch)
+  if (index !== -1) {
+    contacts.splice(index, 1)
+    save();
+    outputEl.innerHTML = "Contact deleted!"
   } else {
-    outputEl.innerHTML = "Not a valid index number!";
+    outputEl.innerHTML = "Not a valid email!";
   }
 }
 
 function displayByName() {
   outputEl.innerHTML = "";
-  let searchName = new RegExp(prompt("Enter name:"));
+  let searchName = prompt("Enter name:");
   for (let i = 0; i < contacts.length; i++) {
-    if (new RegExp(contacts[i].name).test(searchName)) {
-      console.log("EE");
+    if (contacts[i].name.includes(searchName)) {
       outputEl.innerHTML += getContactStr(i);
     }
   }
@@ -109,14 +113,23 @@ function getContactStr(i) {
   `;
 }
 
-function findByEmail() {
+function findByEmail(email) {
   let emailArr = [];
   for (let i = 0; i < contacts.length; i++) {
     emailArr.push(contacts[i].email);
   }
-  let emailSearch = prompt("Enter email:");
+  return emailArr.indexOf(email);
+}
 
-  return emailArr.indexOf(emailSearch);
+function searchByEmail() {
+  outputEl.innerHTML = ""
+  let emailSearch = prompt("Enter email:");
+  let index = findByEmail(emailSearch)
+  if(index !== -1) {
+    outputEl.innerHTML = getContactStr(index)
+  } else {
+    outputEl.innerHTML = "Not a valid email"
+  }
 }
 
 function loadContacts() {
